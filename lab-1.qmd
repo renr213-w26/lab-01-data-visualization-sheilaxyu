@@ -14,6 +14,8 @@ Loading Packages needed for the Lab
 ```{r}
 install.packages('tidyverse')
 library(tidyverse)
+install.packages('scales')
+library(scales)
 ```
 
 ## Part 1
@@ -72,9 +74,34 @@ ggplot(midwest, aes(x = popdensity)) +
   )
 ```
 
-A binwidth of 100 is the most appropriate choice for this analysis because it effectively captures the granularity of population density variations, particularly for counts below 10. In contrast, the other larger binwidths over-smooth the distribution, resulting in a loss of visual resolutioncompared to the 100-unit interval
+A binwidth of 100 is the most appropriate choice for this analysis because it effectively captures the granularity of population density variations, particularly for counts below 10. In contrast, the other larger binwidths over-smooth the distribution, resulting in a loss of visual resolutioncompared to the 100-unit interval.
 
 ### Question 2
+
+Creating the boxplot
+
+```{r}
+ggplot(midwest, aes(x = "", y = popdensity)) +
+  geom_boxplot() +
+  scale_y_log10(label = label_number(scale = 1/10000)) +
+  labs(
+    x = NULL,
+    y = "Population density (×10,000 people per sq. mile)",
+    title = "Population density of Midwestern counties",
+    subtitle = "in log-scale"
+  ) +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+Identifying the outliers
+
+```{r}
+data <- midwest
+view(data)
+```
+
+The distribution of population density in Midwestern counties is highly right-skewed, as demonstrated by both the histogram and the boxplot. The histogram shows that the majority of counties cluster at very low population densities, with counts dropping off rapidly as density increases. A long right tail extends toward higher values, suggesting the presence of outliers. The boxplot reinforces this pattern: the median population density is relatively low, the interquartile range is compact compared to the full range of the data, and several high-density outliers appear far above the upper whisker. The data are displayed on a log scale to improve visualization. One of the outliers is Cook County, Illinois, which has the highest population density in the dataset. This outlier is expected, as Cook County contains the city of Chicago, a major metropolitan area with a large population concentrated within a relatively small geographic area compared to many rural counties. Overall, the presence of these outliers reflects the stark contrast between predominantly rural counties across the Midwest and a small number of highly urbanized counties.
 
 ### Question 3
 
