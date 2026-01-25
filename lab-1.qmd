@@ -72,6 +72,8 @@ ggplot(midwest, aes(x = popdensity)) +
   )
 ```
 
+A binwidth of 100 is the most appropriate choice for this analysis because it effectively captures the granularity of population density variations, particularly for counts below 10. In contrast, the other larger binwidths over-smooth the distribution, resulting in a loss of visual resolutioncompared to the 100-unit interval
+
 ### Question 2
 
 ### Question 3
